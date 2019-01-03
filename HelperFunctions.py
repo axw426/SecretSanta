@@ -1,6 +1,10 @@
 import random
 from copy import deepcopy
 import xlrd 
+import smtplib, ssl
+from validate_email import validate_email
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def attemptOrdering(people):
 
@@ -47,5 +51,33 @@ def readFile():
 		banlist[sheet.row_values(row)[0]]=sheet.row_values(row)[2:]
 	
 	return people,emails,banlist
+	
+def validateEmail(people,emails):
+	#only checks if the @xx.xx exists, can't check if full email address is valid these days
+	for person in people:
+		if validate_email(emails[person],check_mx=True) == False:
+			print(emails[person]+" not valid!!! \n")
+			exit()
+	
+def sendEmails(finalgiver,finalreceiver, emails):
+	fromaddr = "alasdairwinterswonderland@gmail.com"
+	server = smtplib.SMTP('smtp.gmail.com', 587)
+	server.starttls()
+	server.login(fromaddr, "WintersWonderland2018")
+	for giver,receiver in zip(finalgiver,finalreceiver):
+
+		toaddr = emails[giver]
+		msg = MIMEMultipart()
+		msg['From'] = fromaddr
+		msg['To'] = toaddr
+		msg['Subject'] = "Secret Santa"
+		 
+		body = "Hi "+giver+", \n\nYou are buying for "+receiver+"!\n\n Regards,\nSanta"
+		msg.attach(MIMEText(body, 'plain'))
+		
+		text = msg.as_string()
+		server.sendmail(fromaddr, toaddr, text)
+		
+	server.quit()
 
 	

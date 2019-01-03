@@ -1,7 +1,10 @@
 from copy import deepcopy
 import HelperFunctions as hf
 
+sendemails=True
+
 people, emails, banlist=hf.readFile()
+hf.validateEmail(people,emails)
 	
 i=0
 
@@ -16,4 +19,5 @@ while True:
 	if hf.failedUniqueTest(finalgiver,finalreceiver) == True: continue
 	if hf.failedBanList(finalgiver,finalreceiver,banlist) ==True: continue
 	hf.printResults(finalgiver,finalreceiver)
+	if sendemails == True: hf.sendEmails(finalgiver,finalreceiver,emails)
 	break	
