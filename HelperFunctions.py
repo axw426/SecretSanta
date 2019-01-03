@@ -60,10 +60,10 @@ def validateEmail(people,emails):
 			exit()
 	
 def sendEmails(finalgiver,finalreceiver, emails):
-	fromaddr = "alasdairwinterswonderland@gmail.com"
+	fromaddr = "SecretSantasWinterWonderland@gmail.com"
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.starttls()
-	server.login(fromaddr, "WintersWonderland2018")
+	server.login(fromaddr, "santasww2018")
 	for giver,receiver in zip(finalgiver,finalreceiver):
 
 		toaddr = emails[giver]
