@@ -1,16 +1,8 @@
 from copy import deepcopy
 import HelperFunctions as hf
 
-people = ["Alison","Ross","Debbie","Sophie","Meg"]
-
-banlist= {
-		"Alison":[],
-		"Ross":["Sophie"],
-		"Debbie":[],
-		"Sophie":["Ross"],
-		"Meg":[]
-	}
-
+people, emails, banlist=hf.readFile()
+	
 i=0
 
 while True:

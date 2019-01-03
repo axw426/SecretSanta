@@ -1,5 +1,6 @@
 import random
 from copy import deepcopy
+import xlrd 
 
 def attemptOrdering(people):
 
@@ -32,5 +33,19 @@ def failedBanList(finalgiver,finalreceiver,banlist) :
 		banned=banlist[giver]
 		if receiver in banned : return True
 	return False	
+	
+def readFile():
+	people=[]
+	emails={}
+	banlist={}
+	
+	wb = xlrd.open_workbook("InputData.xlsx")
+	sheet = wb.sheet_by_index(0) 
+	for row in range(1,sheet.nrows):
+		people.append(sheet.row_values(row)[0])
+		emails[sheet.row_values(row)[0]]=sheet.row_values(row)[1]
+		banlist[sheet.row_values(row)[0]]=sheet.row_values(row)[2:]
+	
+	return people,emails,banlist
 
 	
